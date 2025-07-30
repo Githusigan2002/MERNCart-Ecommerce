@@ -1,5 +1,20 @@
 import Products from "../models/Product.model.js";
 
+export const deleteProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const deleteProduct = await Products.findByIdAndDelete(productId);
+    if (!deleteProduct) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+    res.status(200).json({ message: "Product deleted sucrssfully." });
+  } catch (error) {
+    res.status(500).json({
+      message: "Falied to delete product",
+      error: error.message,
+    });
+  }
+};
 export const updateProduct = async (req, res) => {
   try {
     const productId = req.params.id;
